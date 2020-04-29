@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OData.Edm;
 using Server.Data;
 
@@ -33,7 +27,7 @@ namespace ODataServerClient
         .AddEntityFrameworkNpgsql()
         .AddDbContext<AppDbContext>();
 
-      services.AddControllers(o => o.EnableEndpointRouting = false);     
+      services.AddControllers(o => o.EnableEndpointRouting = false);
 
       services.AddOData();
     }
@@ -48,7 +42,7 @@ namespace ODataServerClient
 
       app.UseHttpsRedirection();
       app.UseRouting();
-      app.UseAuthorization();      
+      app.UseAuthorization();
 
       app.UseMvc(routeBuilder =>
       {
@@ -67,7 +61,14 @@ namespace ODataServerClient
           var odataBuilder = new ODataConventionModelBuilder();
 
           var company = odataBuilder
-          .EntitySet<Company>("Companies");
+          .EntitySet<Company>("Companies")
+          .EntityType;
+
+          //odataBuilder.ComplexType<Contact>();
+          //odataBuilder.ComplexType<Phone>();
+
+          //company
+          //.CollectionProperty(c => c.Contacts);
 
           return odataBuilder.GetEdmModel();
         }

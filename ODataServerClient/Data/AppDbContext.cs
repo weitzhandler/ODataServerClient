@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace Server.Data
@@ -11,7 +7,6 @@ namespace Server.Data
   {
     [SuppressMessage("Compiler", "CS8618")]
     public DbSet<Company> Companies { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,6 +18,15 @@ namespace Server.Data
           new Contact
           {
             Name = "Shimmy",
+            Phones =
+            {
+               new Phone { Number = "123456789" },
+               new Phone { Number = "987654321" },
+            }
+          },
+          new Contact
+          {
+            Name = "Brachi",
             Phones =
             {
                new Phone { Number = "123456789" },

@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.OData.Builder;
+using Newtonsoft.Json;
 
 namespace Server.Data
 {
+
   public class Company
   {
     public int Id { get; set; }
 
-    HashSet<Contact>? _Contacts;
-    [Contained]
+    List<Contact>? _Contacts;
+
     [Column(TypeName = "jsonb")]
-    public HashSet<Contact> Contacts
+    [Contained]
+    [JsonProperty]
+    public List<Contact> Contacts
     {
-      get => _Contacts ??= new HashSet<Contact>();
-      private set => _Contacts = value;
+      get => _Contacts ??= new List<Contact>();
+      set => _Contacts = value;
     }
   }
 
+  [ComplexType]
   public class Contact
   {
     public int Id { get; set; }
@@ -29,16 +31,19 @@ namespace Server.Data
     [Required]
     public string? Name { get; set; }
 
-    HashSet<Phone>? _Phones;
+    List<Phone>? _Phones;
+
     [Contained]
-    public HashSet<Phone> Phones
+    [JsonProperty]
+    public List<Phone> Phones
     {
-      get => _Phones ??= new HashSet<Phone>();
-      private set => _Phones = value;
+      get => _Phones ??= new List<Phone>();
+      set => _Phones = value;
     }
 
   }
 
+  [ComplexType]
   public class Phone
   {
     [Required]
