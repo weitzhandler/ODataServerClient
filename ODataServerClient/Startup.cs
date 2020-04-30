@@ -47,6 +47,9 @@ namespace ODataServerClient
       app.UseMvc(routeBuilder =>
       {
         routeBuilder
+        .EnableDependencyInjection();
+
+        routeBuilder
         .Select()
         .Filter()
         .Expand()
@@ -60,15 +63,7 @@ namespace ODataServerClient
         {
           var odataBuilder = new ODataConventionModelBuilder();
 
-          var company = odataBuilder
-          .EntitySet<Company>("Companies")
-          .EntityType;
-
-          //odataBuilder.ComplexType<Contact>();
-          //odataBuilder.ComplexType<Phone>();
-
-          //company
-          //.CollectionProperty(c => c.Contacts);
+          odataBuilder.EntitySet<Company>("Companies");
 
           return odataBuilder.GetEdmModel();
         }

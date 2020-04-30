@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -29,6 +28,8 @@ namespace Server.Tests
       // Assert
       response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.OK);
     }
+
+
 
 
   }
